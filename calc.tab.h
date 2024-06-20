@@ -54,11 +54,17 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    NUM = 258,                     /* NUM  */
-    IDENT = 259,                   /* IDENT  */
-    FOR = 260,                     /* FOR  */
-    AND = 261,                     /* AND  */
-    OR = 262                       /* OR  */
+    NUMBER = 258,                  /* NUMBER  */
+    NAME = 259,                    /* NAME  */
+    FUNC = 260,                    /* FUNC  */
+    EOL = 261,                     /* EOL  */
+    IF = 262,                      /* IF  */
+    THEN = 263,                    /* THEN  */
+    ELSE = 264,                    /* ELSE  */
+    WHILE = 265,                   /* WHILE  */
+    DO = 266,                      /* DO  */
+    LET = 267,                     /* LET  */
+    CMP = 268                      /* CMP  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -67,12 +73,15 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 54 "calc.y"
+#line 11 "calc.y"
 
-    int num;
-    char* str;
+    struct ast *a;
+    double d;
+    struct symbol *s; /* qual símbolo? */
+    struct symlist *sl;
+    int fn; /* qual função? */
 
-#line 76 "calc.tab.h"
+#line 85 "calc.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
