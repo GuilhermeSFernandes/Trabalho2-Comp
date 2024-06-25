@@ -8,6 +8,8 @@
 #include <math.h>
 
 #define NHASH 9997
+extern FILE *yyin;
+extern int yylineno;
 
 struct symbol {
     char *name;

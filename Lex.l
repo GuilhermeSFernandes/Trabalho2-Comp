@@ -31,6 +31,9 @@ EXP ([Ee][+-]?[0-9]+)
 "while" { return WHILE; }
 "do" { return DO; }
 "let" { return LET; }
+"for" { return FOR; }
+"and" { return AND; }
+"or" { return OR; }
 
 "sqrt" { yylval.fn = B_sqrt; return FUNC; }
 "exp" { yylval.fn = B_exp; return FUNC; }
