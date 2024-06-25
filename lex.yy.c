@@ -1,6 +1,5 @@
-#line 2 "calc.lex.c"
 
-#line 4 "calc.lex.c"
+#line 3 "lex.yy.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -516,9 +515,9 @@ char *yytext;
 #line 3 "Lex.l"
 #include "calc.h"
 #include "calc.tab.h"
-#line 520 "calc.lex.c"
+#line 519 "lex.yy.c"
 /* expoente float */
-#line 522 "calc.lex.c"
+#line 521 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -737,7 +736,7 @@ YY_DECL
 	{
 #line 10 "Lex.l"
 
-#line 741 "calc.lex.c"
+#line 740 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -944,7 +943,7 @@ YY_RULE_SETUP
 #line 48 "Lex.l"
 YY_FATAL_ERROR( "flex scanner jammed" );
 	YY_BREAK
-#line 948 "calc.lex.c"
+#line 947 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 

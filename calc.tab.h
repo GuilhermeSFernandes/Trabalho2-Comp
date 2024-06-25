@@ -58,13 +58,16 @@ extern int yydebug;
     NAME = 259,                    /* NAME  */
     FUNC = 260,                    /* FUNC  */
     EOL = 261,                     /* EOL  */
-    IF = 262,                      /* IF  */
-    THEN = 263,                    /* THEN  */
-    ELSE = 264,                    /* ELSE  */
-    WHILE = 265,                   /* WHILE  */
-    DO = 266,                      /* DO  */
-    LET = 267,                     /* LET  */
-    CMP = 268                      /* CMP  */
+    FOR = 262,                     /* FOR  */
+    AND = 263,                     /* AND  */
+    OR = 264,                      /* OR  */
+    IF = 265,                      /* IF  */
+    THEN = 266,                    /* THEN  */
+    ELSE = 267,                    /* ELSE  */
+    WHILE = 268,                   /* WHILE  */
+    DO = 269,                      /* DO  */
+    LET = 270,                     /* LET  */
+    CMP = 271                      /* CMP  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -81,7 +84,7 @@ union YYSTYPE
     struct symlist *sl;
     int fn; /* qual função? */
 
-#line 85 "calc.tab.h"
+#line 88 "calc.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

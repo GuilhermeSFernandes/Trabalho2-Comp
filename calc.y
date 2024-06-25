@@ -21,10 +21,13 @@
 %token <s> NAME
 %token <fn> FUNC
 %token EOL
+%token FOR
+%token AND OR
 %token IF THEN ELSE WHILE DO LET
 
 %nonassoc <fn> CMP
 %right '='
+%left AND OR
 %left '+' '-'
 %left '*' '/'
 
@@ -38,6 +41,7 @@
 stmt : IF exp THEN list { $$ = newflow('I', $2, $4, NULL); }
      | IF exp THEN list ELSE list { $$ = newflow('I', $2, $4, $6); }
      | WHILE exp DO list { $$ = newflow('W', $2, $4, NULL); }
+     | FOR '(' stmt ';' exp ';' stmt ')' list { $$ = newfor($3, $5, $7, $9); }
      | exp
      ;
 
@@ -46,6 +50,8 @@ list : /* vazio! */ { $$ = NULL; }
      ;
 
 exp : exp CMP exp { $$ = newcmp($2, $1, $3); }
+    | exp AND exp { $$ = newast('A', $1, $3); }
+    | exp OR exp { $$ = newast('O', $1, $3); }
     | exp '+' exp { $$ = newast('+', $1, $3); }
     | exp '-' exp { $$ = newast('-', $1, $3); }
     | exp '*' exp { $$ = newast('*', $1, $3); }

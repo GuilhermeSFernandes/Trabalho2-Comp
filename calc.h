@@ -1,20 +1,13 @@
 #ifndef CALC_H
 #define CALC_H
 
-/**
- * @file calc.h
- * @brief Definições de estruturas e protótipos de funções para o parser da calculadora avançada.
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <string.h>
 #include <math.h>
 
-/* Estruturas de dados */
-
-extern int yylineno;
-void yyerror(char *s, ...);
+#define NHASH 9997
 
 struct symbol {
     char *name;
@@ -23,8 +16,8 @@ struct symbol {
     struct symlist *syms;
 };
 
-#define NHASH 9997
 extern struct symbol symtab[NHASH];
+
 struct symbol *lookup(char *sym);
 
 struct symlist {
@@ -65,6 +58,7 @@ struct flow {
     struct ast *cond;
     struct ast *tl;
     struct ast *el;
+    struct ast *init;
 };
 
 struct numval {
@@ -83,7 +77,6 @@ struct symasgn {
     struct ast *v;
 };
 
-/* Protótipos das funções */
 struct ast *newast(int nodetype, struct ast *l, struct ast *r);
 struct ast *newcmp(int cmptype, struct ast *l, struct ast *r);
 struct ast *newfunc(int functype, struct ast *l);
@@ -97,5 +90,6 @@ void dodef(struct symbol *name, struct symlist *syms, struct ast *stmts);
 
 double eval(struct ast *a);
 void treefree(struct ast *a);
+void yyerror(char *s, ...);
 
-#endif /* CALC_H */
+#endif

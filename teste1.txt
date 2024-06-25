@@ -1,0 +1,8 @@
+let x = 10;
+let y = 0;
+let z = 0;
+
+while (x > 0) do
+    let y = y + 1;
+    let x = x - 1;
+let print(y);

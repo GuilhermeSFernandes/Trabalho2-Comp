@@ -4,7 +4,10 @@
 #include <string.h>
 #include <math.h>
 #include "calc.h"
-
+#include "calc.tab.h"
+extern int yyparse(void);
+int yylineno = 0;
+struct symbol symtab[NHASH];
 /* funcoes em C para TS */
 /* funcao hashing */
 static unsigned symhash(char *sym)
@@ -44,7 +47,19 @@ struct symbol *lookup(char *sym)
     yyerror("overflow na tab. simbolos\n");
     abort(); /* tabela esta cheia */
 }
-
+struct ast *newfor(struct ast *init, struct ast *cond, struct ast *inc, struct ast *body) {
+    struct flow *a = malloc(sizeof(struct flow));
+    if (!a) {
+        yyerror("Out of space");
+        exit(0);
+    }
+    a->nodetype = 'F';
+    a->cond = cond;
+    a->tl = body;
+    a->el = inc;
+    a->init = init;
+    return (struct ast *)a;
+}
 struct ast *newast(int nodetype, struct ast *l, struct ast *r)
 {
     struct ast *a = malloc(sizeof(struct ast));
@@ -280,7 +295,12 @@ double eval(struct ast *a)
         case '/':
             v = eval(a->l) / eval(a->r);
             break;
-
+        case 'A':
+            v = eval(a->l) && eval(a->r);
+            break;
+        case 'O':
+            v = eval(a->l) || eval(a->r);
+            break;
         /* comparacoes */
         case '1':
             v = (eval(a->l) > eval(a->r)) ? 1 : 0;
@@ -382,7 +402,12 @@ static double callbuiltin(struct fncall *f)
             return 0.0;
     }
 }
-
+void dodef(struct symbol *name, struct symlist *syms, struct ast *stmts) {
+    if (name->syms) symlistfree(name->syms);
+    if (name->func) treefree(name->func);
+    name->syms = syms;
+    name->func = stmts;
+}
 static double calluser(struct ufncall *f)
 {
     struct symbol *fn = f->s; /* nome da funcao */
@@ -475,8 +500,25 @@ void yyerror(char *s, ...)
     vfprintf(stderr, s, ap);
     fprintf(stderr, "\n");
 }
-int main()
-{
+FILE *yyin; // Declaração global ou local de yyin
+
+int main(int argc, char *argv[]) {
+    FILE *input;
+    
+    if (argc != 2) {
+        fprintf(stderr, "Uso: %s <arquivo de entrada>\n", argv[0]);
+        exit(EXIT_FAILURE);
+    }
+    
+    input = fopen(argv[1], "r");
+    if (!input) {
+        perror("Erro ao abrir o arquivo de entrada");
+        exit(EXIT_FAILURE);
+    }
+
+    yyin = input; // Definir yyin para ler do arquivo ao invés de stdin
+    
     printf("> ");
-    return yyparse();
+    return yyparse(); // Chamar o parser para processar o arquivo de entrada
 }
+
