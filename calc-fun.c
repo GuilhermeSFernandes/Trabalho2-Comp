@@ -4,12 +4,11 @@
 #include <string.h>
 #include <math.h>
 #include "calc.h"
-#include "calc.tab.h"
+
 extern int yyparse(void);
-int yylineno = 0;
-struct symbol symtab[NHASH];
 /* funcoes em C para TS */
 /* funcao hashing */
+struct symbol symtab[NHASH];
 static unsigned symhash(char *sym)
 {
     unsigned int hash = 0;
@@ -500,7 +499,7 @@ void yyerror(char *s, ...)
     vfprintf(stderr, s, ap);
     fprintf(stderr, "\n");
 }
-FILE *yyin; // Declaração global ou local de yyin
+extern FILE *yyin; // Declaração global ou local de yyin
 
 int main(int argc, char *argv[]) {
     FILE *input;

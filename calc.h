@@ -20,7 +20,7 @@ struct symbol {
 
 extern struct symbol symtab[NHASH];
 
-struct symbol *lookup(char *sym);
+struct symbol *lookup(char *);
 
 struct symlist {
     struct symbol *sym;

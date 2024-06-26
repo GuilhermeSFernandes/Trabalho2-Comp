@@ -27,9 +27,9 @@
 
 %nonassoc <fn> CMP
 %right '='
-%left AND OR
 %left '+' '-'
 %left '*' '/'
+%left AND OR
 
 %type <a> exp stmt list explist
 %type <sl> symlist
@@ -50,12 +50,12 @@ list : /* vazio! */ { $$ = NULL; }
      ;
 
 exp : exp CMP exp { $$ = newcmp($2, $1, $3); }
-    | exp AND exp { $$ = newast('A', $1, $3); }
-    | exp OR exp { $$ = newast('O', $1, $3); }
     | exp '+' exp { $$ = newast('+', $1, $3); }
     | exp '-' exp { $$ = newast('-', $1, $3); }
     | exp '*' exp { $$ = newast('*', $1, $3); }
     | exp '/' exp { $$ = newast('/', $1, $3); }
+    | exp OR exp { $$ = newast('O', $1, $3); }
+    | exp AND exp { $$ = newast('A', $1, $3); }
     | '(' exp ')' { $$ = $2; }
     | NUMBER { $$ = newnum($1); }
     | NAME { $$ = newref($1); }

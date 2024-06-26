@@ -25,7 +25,7 @@ lex.yy.c: Lex.l
 	$(LEX) Lex.l
 
 teste: calc
-	./calc < teste.txt
+	./calc < teste1.calc
 
 clean:
 	rm -f calc lex.yy.c *.o calc.tab.*
